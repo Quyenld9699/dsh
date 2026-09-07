@@ -33,7 +33,7 @@ const styles = { insert: (css) => {
   return () => { el.remove(); };
 } };
 const __tok = (typeof location !== "undefined" && new URLSearchParams(location.search).get("token")) || "";
-const host = { call: (method, args) => fetch("/dsh-sm/" + method + (__tok ? "?token=" + encodeURIComponent(__tok) + "&" : "?") + "q=" + encodeURIComponent(JSON.stringify(args || {})), { method: "GET", cache: "no-store" }).then(async (r) => { const t = await r.text(); if (!t) throw new Error("HTTP " + r.status + " — response rỗng"); let j; try { j = JSON.parse(t); } catch (e) { throw new Error("HTTP " + r.status + ": " + t.slice(0, 160)); } if (j && j.ok === false && j.error) throw new Error(j.error); return j; }) };
+const host = { call: (method, args) => fetch("/dsh-sm/" + String(method).replace(/^skillmgr\./, "") + (__tok ? "?token=" + encodeURIComponent(__tok) + "&" : "?") + "q=" + encodeURIComponent(JSON.stringify(args || {})), { method: "GET", cache: "no-store" }).then(async (r) => { const t = await r.text(); if (!t) throw new Error("HTTP " + r.status + " — response rỗng"); let j; try { j = JSON.parse(t); } catch (e) { throw new Error("HTTP " + r.status + ": " + t.slice(0, 160)); } if (j && j.ok === false && j.error) throw new Error(j.error); return j; }) };
 function makePlugin() {
 ${dyn.split('\n').map((l) => '  ' + l).join('\n')}
 }
