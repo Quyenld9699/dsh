@@ -64,7 +64,7 @@ export function apply(ctx) {
     }
     throw new Error('Không tìm thấy PowerShell')
   }
-  const ps = async (script, cwd) => spawnRaw(await pickPs(), ['-NoProfile', '-NonInteractive', '-Command', script], cwd || 'C:/')
+  const ps = async (script, cwd) => spawnRaw(await pickPs(), ['-NoProfile', '-NonInteractive', '-EncodedCommand', Buffer.from(script, 'utf16le').toString('base64')], cwd || 'C:/')
 
   const wsList = () => {
     const registry = svc('workspaceRegistry')
