@@ -9,7 +9,7 @@ const styles = { insert: (css) => {
   el.textContent = css;
   return () => { el.remove(); };
 } };
-const host = { call: (method, args) => fetch("/dsh-sm/" + method, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(args || {}) }).then(async (r) => { const t = await r.text(); if (!t) throw new Error("HTTP " + r.status + " — response rỗng"); let j; try { j = JSON.parse(t); } catch (e) { throw new Error("HTTP " + r.status + ": " + t.slice(0, 160)); } if (j && j.ok === false && j.error) throw new Error(j.error); return j; }) };
+const host = { call: (method, args) => fetch("/dsh-sm/" + method + "?q=" + encodeURIComponent(JSON.stringify(args || {})), { method: "GET", cache: "no-store" }).then(async (r) => { const t = await r.text(); if (!t) throw new Error("HTTP " + r.status + " — response rỗng"); let j; try { j = JSON.parse(t); } catch (e) { throw new Error("HTTP " + r.status + ": " + t.slice(0, 160)); } if (j && j.ok === false && j.error) throw new Error(j.error); return j; }) };
 function makePlugin() {
   return {
     apply(ctx) {

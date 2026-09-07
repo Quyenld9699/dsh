@@ -266,10 +266,22 @@ export function apply(ctx) {
       res.writeHead(code, { 'cache-control': 'no-store', 'content-type': 'application/json; charset=utf-8' })
       res.end(JSON.stringify(obj))
     }
+    const argsOf = (req) => {
+      try {
+        const u = new URL(req.url || '', 'http://localhost')
+        const q = u.searchParams.get('q')
+        return q ? JSON.parse(q) : {}
+      } catch (e) { return {} }
+    }
     const makeHandler = (key) => async (req, res) => {
       try {
-        if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'POST only' })
-        send(res, 200, await handlers[key](await readBody(req)))
+        if (req.method === 'POST') {
+          send(res, 200, await handlers[key](await readBody(req)))
+        } else if (req.method === 'GET') {
+          send(res, 200, await handlers[key](argsOf(req)))
+        } else {
+          send(res, 405, { ok: false, error: 'GET/POST only' })
+        }
       } catch (e) {
         send(res, 500, { ok: false, error: fmtErr(e) })
       }
