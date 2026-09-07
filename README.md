@@ -9,8 +9,8 @@ D:\dsh\
 │       ├── dynamic\    #   UI "Skill Manager" (plugin động, dựng lại trong session)
 │       └── static\     #   Host tĩnh: tự kích hoạt skill ⚡ mỗi khi boot harness
 ├── themes\             # Theme tự dựng (trống, chờ bổ sung)
-├── skills\             # Skill tự dựng
-│   └── company\        #   bao-gia, project-status, sprint-report, time-logs-report
+├── skills\             # Skill GLOBAL (dùng mọi workspace) — CHỈ thêm khi bạn chỉ định
+│                       #   (skill chỉ dùng 1 workspace KHÔNG nằm ở đây, giữ ở <workspace>\.agents\skills)
 ├── scripts\
 │   └── activate.ps1    # ★ SCRIPT KÍCH HOẠT — chạy trên máy mới
 └── README.md           # Bạn đang đọc file này (playbook)
@@ -37,7 +37,7 @@ powershell -ExecutionPolicy Bypass -File D:\dsh\scripts\activate.ps1
 Script tự làm:
 1. Copy `plugins\dsh-skill-manager\static` → `<DSH_HOME>\profiles\web\node_modules\dsh-skill-manager`.
 2. Thêm loader row `skillmgr-static` vào `<DSH_HOME>\profiles\web\cordis.patch.yml` (chỉ thêm nếu chưa có).
-3. Copy `skills\company\*` → `~\.agents\skills\` (skill toàn máy).
+3. Copy mọi thư mục con trong `skills\` (skill global đã chọn) → `~\.agents\skills\`.
 4. In danh sách việc cần làm tay còn lại.
 
 ### Bước 3 — Làm tay (script in ra)
@@ -45,7 +45,8 @@ Script tự làm:
    `<workspace>\.agents\skill-autoload.json`; file này theo từng máy — sau khi restore cần đánh dấu lại qua UI hoặc nhờ agent).
 2. **UI "Skill Manager"** (trang Settings) là plugin động theo session → mở 1 hội thoại và nhắn:
    > "Dựng lại plugin Skill Manager từ D:\dsh\plugins\dsh-skill-manager\dynamic (đọc README, cordis_define + run)."
-3. Kiểm tra danh mục skill ở hội thoại mới (company skills + các skill đã cài).
+3. Kiểm tra danh mục skill ở hội thoại mới (các skill global + skill của từng workspace
+   — workspace skills nằm trong `<workspace>\.agents\skills`, không nằm trong repo này).
 
 ---
 
@@ -55,7 +56,9 @@ Script tự làm:
 - **Plugin tĩnh**: tự chạy mỗi boot, không cần duyệt; rollback = xoá thư mục `node_modules\dsh-skill-manager` + dòng `insert: skillmgr-static` trong `cordis.patch.yml`, restart.
 - **Hộp cát**: plugin chỉ ghi được trong workspace hiện tại; thao tác ghi `~\.agents` (user toàn máy) nên **nhờ agent** (file policy danger-full-access) hoặc chạy script với quyền phù hợp.
 - **Market/theme**: themes/ để trống chờ bổ sung; nếu sau này có theme tự dựng thì đặt ở `themes/<tên>` kèm hướng dẫn.
-- Nếu repo chứa dữ liệu nội bộ công ty → **đặt repo GitHub ở chế độ Private**.
+- **Phân biệt phạm vi skill**: `skills\` = global (mọi workspace); `<workspace>\.agents\skills\` = chỉ workspace đó.
+  Chỉ bỏ vào `skills\` khi bạn chủ động yêu cầu "lưu global".
+- Nếu bạn để skill nhạy cảm (số liệu nội bộ…) trong repo này → **đặt repo GitHub ở chế độ Private**.
 
 ## Thêm thứ mới vào kho
 Mỗi plugin/skill/theme: đặt vào đúng thư mục con kèm `README` nhỏ mô tả chức năng + cách kích hoạt, rồi commit.

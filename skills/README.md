@@ -1,15 +1,12 @@
-# skills — skill tự dựng
+# skills — skill GLOBAL (dùng cho mọi workspace)
 
-## company/ (nội bộ công ty — nên để repo Private)
+Chỉ đặt ở đây những skill **bạn muốn dùng toàn máy (mọi workspace)**.
 
-| Skill | Mô tả ngắn |
-|---|---|
-| `time-logs-report` | Báo cáo tổng giờ log / tỉ lệ nhân sự theo tháng (đọc Notion) |
-| `sprint-report` | Báo cáo sprint + đối chiếu estimate vs time logs |
-| `bao-gia` | (báo giá) |
-| `project-status` | (trạng thái dự án) |
+- Thư mục con = 1 skill (có `SKILL.md`); `activate.ps1` sẽ copy tất cả thư mục con ở đây
+  vào `~\.agents\skills\` (global) khi kích hoạt trên máy mới.
+- **Skill chỉ dùng cho 1 workspace thì KHÔNG đưa vào đây** — chúng nằm ở
+  `<workspace>\.agents\skills\` (vd `D:\PGĐ-Management\.agents\skills\...`) và chỉ áp dụng workspace đó.
 
-Cách cài (script `activate.ps1` tự làm): copy từng thư mục vào `~\.agents\skills\<tên>`
-(tức `C:\Users\<user>\.agents\skills\<tên>`) → xuất hiện ở mọi hội thoại qua danh mục skill.
-
-Lưu ý: nội dung skill có thể nhạy cảm (số liệu, quy trình nội bộ) — đừng push repo này ở chế độ Public.
+### Quy tắc thêm skill global
+Bạn chỉ định "lưu skill X vào global" → mình copy `~\.agents\skills\X` (hoặc nguồn) vào `skills\X`
+kèm README mô tả, rồi commit.

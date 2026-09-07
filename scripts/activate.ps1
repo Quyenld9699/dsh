@@ -55,23 +55,21 @@ if (Test-Path $patch) {
     Write-Host "[2/3] Không thấy cordis.patch.yml — bỏ qua." -ForegroundColor Yellow
 }
 
-# 3) Skills company -> ~/.agents/skills (toàn máy)
-$srcSkills = Join-Path $repo "skills\company"
+# 3) Skills GLOBAL (mọi thư mục con trong skills\ đã được bạn chọn là global)
+$srcSkills = Join-Path $repo "skills"
 if (Test-Path $srcSkills) {
     New-Item -ItemType Directory -Force -Path $skillsRoot | Out-Null
-    $n = 0
     Get-ChildItem $srcSkills -Directory | ForEach-Object {
         $dst = Join-Path $skillsRoot $_.Name
         if ((Test-Path (Join-Path $dst "SKILL.md")) -and -not $Force) {
-            Write-Host "[3/3] Bỏ qua (đã có): $($_.Name)" -ForegroundColor DarkGray
+            Write-Host "[3/3] Bỏ qua (đã có global): $($_.Name)" -ForegroundColor DarkGray
         } else {
             Copy-Item $_.FullName $dst -Recurse -Force
-            Write-Host "[3/3] Skill -> ~/.agents/skills/$($_.Name)" -ForegroundColor Green
-            $n++
+            Write-Host "[3/3] Skill global -> ~/.agents/skills/$($_.Name)" -ForegroundColor Green
         }
     }
 } else {
-    Write-Host "[3/3] Không có skills\company — bỏ qua." -ForegroundColor Yellow
+    Write-Host "[3/3] Không có thư mục skills — bỏ qua." -ForegroundColor Yellow
 }
 
 Write-Host ""
