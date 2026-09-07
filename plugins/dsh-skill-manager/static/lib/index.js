@@ -18,8 +18,10 @@ const fmtErr = (e) => {
 }
 
 async function readTextFile(ps, p) {
-  const r = await ps(`Write-Output ([Convert]::ToBase64String([IO.File]::ReadAllBytes('${sq(p)}')))`, 'C:/')
-  return atob(String(r.stdout || '').trim())
+  try {
+    const r = await ps(`$ErrorActionPreference='SilentlyContinue'; Write-Output ([Convert]::ToBase64String([IO.File]::ReadAllBytes('${sq(p)}')))`, 'C:/')
+    return atob(String(r.stdout || '').trim())
+  } catch (e) { return '' }
 }
 async function writeTextFile(ps, p, content) {
   const b64 = btoa(String(content))
@@ -144,7 +146,7 @@ export function apply(ctx) {
 
   async function listAt(root) {
     const s =
-      `$ErrorActionPreference='Stop'; $ProgressPreference='SilentlyContinue'; $root='${sq(root)}'; $rows=@(); ` +
+      `$ErrorActionPreference='SilentlyContinue'; $ProgressPreference='SilentlyContinue'; $root='${sq(root)}'; $rows=@(); ` +
       `if(Test-Path -LiteralPath $root){ Get-ChildItem -LiteralPath $root -Directory -Force | ForEach-Object { $d=$_.FullName; $md=Join-Path $d 'SKILL.md'; $mdo=Join-Path $d 'SKILL.md.disabled'; ` +
       `$has=$false; $en=$false; if(Test-Path -LiteralPath $md -PathType Leaf){ $has=$true; $en=$true } elseif(Test-Path -LiteralPath $mdo -PathType Leaf){ $has=$true }; ` +
       `if($has){ $files=Get-ChildItem -LiteralPath $d -Recurse -File -Force -ErrorAction SilentlyContinue; $len=($files | Measure-Object -Property Length -Sum).Sum; ` +
@@ -179,7 +181,7 @@ export function apply(ctx) {
       const enabled = !!row.enabled
       const fb = dir.replace(/[\\/]+$/, '').split('/').pop()
       let content = ''
-      try { content = await readTextFile(ps, join(dir, enabled ? 'SKILL.md' : 'SKILL.md.disabled')) } catch (e) { continue }
+      try { content = await readTextFile(ps, join(dir, enabled ? 'SKILL.md' : 'SKILL.md.disabled')) } catch (e) { content = '' }
       const meta = parseMeta(content, fb)
       out.push({ name: String(meta.name || fb).toLowerCase(), description: meta.description, areaKey: area.key, origin: area.origin, areaLabel: area.label, dir, kb: Number(row.kb) || 0, disabled: !enabled })
     }
