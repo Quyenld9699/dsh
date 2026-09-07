@@ -1,6 +1,9 @@
 // dsh-skill-manager — STATIC plugin (host + JSON API + auto ⚡).
-// Client tĩnh (window.__ModuleLoader__) gọi host qua POST /dsh-sm/<method>.
+// Client tĩnh (window.__ModuleLoader__) gọi host qua /dsh-sm/<method>.
 // Không cần dynamic runner; tự nạp mỗi boot nhờ loader row trong cordis.patch.yml.
+
+export const name = 'dsh-skill-manager'
+export const inject = []
 
 const join = (a, b) => String(a).replace(/[\\/]+$/, '') + '/' + String(b).replace(/^[\\/]+/, '')
 const sq = (s) => String(s).replace(/'/g, "''")
