@@ -254,7 +254,8 @@ export function apply(ctx) {
     open: async (a) => apiOpen(a.workspaceId || '', a.area, a.name),
     probe: async (a) => apiProbe(a.workspaceId || ''),
   }
-  if (wsrv) {
+  // Mount JSON API giống hệt pattern của dshmarket: ctx.inject(['webServer'], …)
+  ctx.inject(['webServer'], (hostCtx) => {
     const readBody = async (req) => {
       const chunks = []
       for await (const c of req) chunks.push(c)
@@ -262,21 +263,8 @@ export function apply(ctx) {
       try { return JSON.parse(raw) } catch (e) { return {} }
     }
     const send = (res, code, obj) => {
-      res.statusCode = code
-      res.setHeader('Content-Type', 'application/json; charset=utf-8')
+      res.writeHead(code, { 'cache-control': 'no-store', 'content-type': 'application/json; charset=utf-8' })
       res.end(JSON.stringify(obj))
-    }
-    const route = async (req, res) => {
-      try {
-        if (req.method !== 'POST') return send(res, 405, { ok: false, error: 'POST only' })
-        const name2 = String(req.url || '').split('/').pop().split('?')[0]
-        const fn = handlers[name2]
-        if (!fn) return send(res, 404, { ok: false, error: 'Unknown method: ' + name2 })
-        const args = await readBody(req)
-        send(res, 200, await fn(args))
-      } catch (e) {
-        send(res, 500, { ok: false, error: fmtErr(e) })
-      }
     }
     const makeHandler = (key) => async (req, res) => {
       try {
@@ -286,14 +274,12 @@ export function apply(ctx) {
         send(res, 500, { ok: false, error: fmtErr(e) })
       }
     }
-    ctx.effect(() => {
-      const offs = Object.keys(handlers).map((k) => wsrv.register({ kind: 'exact', path: '/dsh-sm/' + k, handler: makeHandler(k) }))
+    hostCtx.effect(() => {
+      const offs = Object.keys(handlers).map((k) => hostCtx.webServer.register({ kind: 'exact', path: '/dsh-sm/' + k, handler: makeHandler(k) }))
+      console.log('[dsh-sm] api mounted:', Object.keys(handlers).join(','))
       return () => { for (const o of offs) { try { o() } catch (e) {} } }
     }, 'dsh-sm api')
-    console.log('[dsh-sm] api ready (exact:', Object.keys(handlers).join(','), ')')
-  } else {
-    console.warn('[dsh-sm] no webServer — static UI không có API')
-  }
+  })
 
   const boot = () => refreshAutos().catch((e) => console.error('[dsh-sm] autoload failed', String((e && e.message) || e)))
   boot()
