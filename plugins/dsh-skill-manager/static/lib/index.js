@@ -261,6 +261,18 @@ export function apply(ctx) {
     delete: async (a) => apiDelete(a.workspaceId || '', a.area, a.name),
     open: async (a) => apiOpen(a.workspaceId || '', a.area, a.name),
     probe: async (a) => apiProbe(a.workspaceId || ''),
+    debug: async (a) => {
+      const wsId = a.workspaceId || ''
+      const areas = await areasFor(wsId)
+      const detail = []
+      for (const area of areas) {
+        let rows = []
+        let err = ''
+        try { rows = await listAt(area.root) } catch (e) { err = String((e && e.message) || e) }
+        detail.push({ key: area.key, origin: area.origin, root: area.root, rowCount: rows.length, err, rows })
+      }
+      return { ok: true, workspaceId: wsId, workspace: findWs(wsId), detail }
+    },
   }
   // Mount JSON API giống hệt pattern của dshmarket: ctx.inject(['webServer'], …)
   ctx.inject(['webServer'], (hostCtx) => {
