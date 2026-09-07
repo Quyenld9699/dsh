@@ -33,16 +33,13 @@ async function psB64(ps, script, cwd) {
 }
 
 export function apply(ctx) {
-  const subprocess = ctx.get('subprocess')
-  const registry = ctx.get('workspaceRegistry')
-  const sp = ctx.get('systemPrompt')
-  const fs = ctx.get('fs')
-  const wsrv = ctx.get('webServer')
-  if (!subprocess || !registry) return
+  const svc = (n) => ctx.get(n)
 
-  // ---- powershell resolver ----
+  // ---- powershell resolver (lấy service lúc gọi, tránh chưa sẵn sàng lúc boot) ----
   async function spawnRaw(bin, args, cwd) {
-    const handle = subprocess.spawn({
+    const sub = svc('subprocess')
+    if (!sub) throw new Error('Service subprocess chưa sẵn sàng')
+    const handle = sub.spawn({
       argv: [bin].concat(args || []), cwd,
       stdio: { stdin: 'ignore', stdout: { maxBytes: 1 << 20, spill: { maxBytes: 16 << 20 } }, stderr: { maxBytes: 1 << 20, spill: { maxBytes: 16 << 20 } } },
       graceMs: 3000,
@@ -57,9 +54,10 @@ export function apply(ctx) {
   let psBin = null
   async function pickPs() {
     if (psBin) return psBin
+    const sub = svc('subprocess')
     const cands = ['C:/Windows/System32/WindowsPowerShell/v1.0/powershell.exe']
-    try { cands.push(await subprocess.resolveExecutable('powershell')) } catch (e) {}
-    try { cands.push(await subprocess.resolveExecutable('pwsh')) } catch (e) {}
+    if (sub) { try { cands.push(await sub.resolveExecutable('powershell')) } catch (e) {} }
+    if (sub) { try { cands.push(await sub.resolveExecutable('pwsh')) } catch (e) {} }
     cands.push('C:/Program Files/PowerShell/7/pwsh.exe')
     for (const c of cands) {
       try { await spawnRaw(c, ['-NoProfile', '-NonInteractive', '-Command', 'Write-Output ok'], 'C:/'); psBin = c; return c } catch (e) {}
@@ -68,15 +66,19 @@ export function apply(ctx) {
   }
   const ps = async (script, cwd) => spawnRaw(await pickPs(), ['-NoProfile', '-NonInteractive', '-Command', script], cwd || 'C:/')
 
-  const wsList = () => { try { return registry.list().map((w) => ({ id: String(w.id), title: String(w.title || ''), path: String(w.path || '') })) } catch (e) { return [] } }
+  const wsList = () => {
+    const registry = svc('workspaceRegistry')
+    if (!registry) return []
+    try { return registry.list().map((w) => ({ id: String(w.id), title: String(w.title || ''), path: String(w.path || '') })) } catch (e) { return [] }
+  }
   const findWs = (id) => wsList().find((w) => w.id === String(id)) || null
   const firstWs = () => wsList()[0] || null
   const homeDir = async () => {
     const r = await ps("Write-Output ([Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes([Environment]::GetFolderPath('UserProfile'))))", 'C:/')
     return atob(String(r.stdout || '').trim()) || 'C:/Users/Public'
   }
-  const fsRead = async (p) => { try { const t = await fs.resolve(p); return await fs.readText(t) } catch (e) { return null } }
-  const fsWrite = async (p, content) => { const t = await fs.resolve(p); await fs.writeText(t, String(content)) }
+  const fsRead = async (p) => { const fs = svc('fs'); if (!fs) return null; try { const t = await fs.resolve(p); return await fs.readText(t) } catch (e) { return null } }
+  const fsWrite = async (p, content) => { const fs = svc('fs'); if (!fs) throw new Error('Dịch vụ fs chưa sẵn sàng'); const t = await fs.resolve(p); await fs.writeText(t, String(content)) }
   const fileExistsLeaf = async (p) => { try { return !!(await ps(`if(Test-Path -LiteralPath '${sq(p)}' -PathType Leaf){ Write-Output '1' }`, 'C:/')).stdout.trim() } catch (e) { return false } }
 
   // ---- marker (⚡) ----
@@ -107,6 +109,7 @@ export function apply(ctx) {
   const autoSections = new Map()
   function unregisterAuto(key) { const c = autoSections.get(key); if (c) { try { c.disposer() } catch (e) {} autoSections.delete(key) } }
   async function registerAuto(entry) {
+    const sp = svc('systemPrompt')
     if (!sp) return
     const md = join(entry.dir, 'SKILL.md')
     if (!(await fileExistsLeaf(md))) { unregisterAuto(entry.key); return }
