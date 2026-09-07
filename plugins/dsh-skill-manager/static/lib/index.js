@@ -85,10 +85,10 @@ export function apply(ctx) {
   let markerCache = null
   const markerCandidates = async () => {
     const w = (firstWs() || {}).path || 'C:/'
-    const out = [join(w, '.agents', 'skill-autoload.json')]
-    if (w !== 'C:/') out.push(join(w, 'skill-autoload.json'))
+    const out = [join(w, 'skill-autoload.json')]
+    if (w !== 'C:/') out.push(join(w, '.agents', 'skill-autoload.json'))
     let home = ''; try { home = await homeDir() } catch (e) {}
-    if (home) { out.push(join(home, '.agents', 'skill-autoload.json')); out.push(join(home, 'skill-autoload.json')) }
+    if (home) { out.push(join(home, 'skill-autoload.json')); out.push(join(home, '.agents', 'skill-autoload.json')) }
     return out
   }
   const ensureMarker = async () => {
