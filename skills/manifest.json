@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "kind": "global-skill-backup",
+  "description": "Backup DẠNG DANH SÁCH các skill GLOBAL của DSH (~/.agents/skills). KHÔNG chứa nội dung skill — chỉ lưu tên + nguồn + ref + cách cài để agent cài lại được.",
+  "updatedAt": "2026-09-24 13:43",
+  "note": "Restore trên máy mới: nhờ agent 'đọc D:\\dsh\\skills\\manifest.json và cài lại các skill theo install của từng source' (clone repo đúng ref, copy các thư mục skill vào ~/.agents/skills). Skill cài từ trước ngoài vault (vd design, ui-styling…) nguồn theo ~/.agents/.skill-lock.json, không liệt kê ở đây.",
+  "sources": [
+    {
+      "id": "superpowers",
+      "repo": "https://github.com/obra/superpowers.git",
+      "ref": "b36e0829c6d0140e93cfef2ca599b1b07d4a7797",
+      "skillsRootInRepo": "skills",
+      "install": "git clone --depth 1 https://github.com/obra/superpowers.git <tmp> && copy TOÀN BỘ thư mục con của <tmp>/skills (14 skill, giữ nguyên làm anh em cùng cấp — chúng tham chiếu chéo bằng sibling path) vào ~/.agents/skills. KHÔNG copy hooks/, scripts/, manifest plugin.",
+      "skills": [
+        "brainstorming",
+        "dispatching-parallel-agents",
+        "executing-plans",
+        "finishing-a-development-branch",
+        "receiving-code-review",
+        "requesting-code-review",
+        "subagent-driven-development",
+        "systematic-debugging",
+        "test-driven-development",
+        "using-git-worktrees",
+        "using-superpowers",
+        "verification-before-completion",
+        "writing-plans",
+        "writing-skills"
+      ],
+      "note": "using-superpowers là skill 'ép dùng skill trước mọi phản hồi' — không đánh dấu ⚡ trừ khi muốn áp đảo mọi session."
+    },
+    {
+      "id": "obsidian-skills",
+      "repo": "https://github.com/kepano/obsidian-skills.git",
+      "ref": "a1dc48e",
+      "skillsRootInRepo": "skills",
+      "install": "git clone --depth 1 https://github.com/kepano/obsidian-skills.git <tmp> && copy các thư mục con của <tmp>/skills (5 skill, mỗi skill tự chứa file tham chiếu riêng) vào ~/.agents/skills.",
+      "skills": [
+        "defuddle",
+        "json-canvas",
+        "obsidian-bases",
+        "obsidian-cli",
+        "obsidian-markdown"
+      ],
+      "note": "Vận hành: obsidian-cli cần Obsidian đang mở + CLI `obsidian` có trong PATH; defuddle cần `npm install -g defuddle`."
+    },
+    {
+      "id": "officecli",
+      "repo": "https://github.com/iOfficeAI/OfficeCLI.git",
+      "ref": "ffa8a0afbe2e9686abd636368e3da38c50f22131",
+      "skillsRootInRepo": "skills",
+      "binary": {
+        "install": "pwsh -File <tmp>/install.ps1  (mirror https://d.officecli.ai trước, fallback GitHub releases; verify SHA256SUMS)",
+        "path": "C:\\Users\\QuyenLD\\AppData\\Local\\OfficeCLI\\officecli.exe",
+        "versionAtInstall": "1.0.152",
+        "pathNote": "install.ps1 thêm %LOCALAPPDATA%\\OfficeCLI vào PATH user — chỉ hiệu lực ở tiến trình mới, phải restart DSH; trước đó dùng đường dẫn đầy đủ."
+      },
+      "install": "git clone --depth 1 https://github.com/iOfficeAI/OfficeCLI.git <tmp> && chạy <tmp>/install.ps1 (cài binary + tự chép SKILL.md gốc vào các agent dir được phát hiện, gồm ~/.agents/skills/officecli) && copy 10 thư mục còn lại của <tmp>/skills vào ~/.agents/skills.",
+      "skills": [
+        "officecli",
+        "officecli-academic-paper",
+        "officecli-data-dashboard",
+        "officecli-docx",
+        "officecli-financial-model",
+        "officecli-pitch-deck",
+        "officecli-pptx",
+        "officecli-word-form",
+        "officecli-xlsx",
+        "morph-ppt",
+        "morph-ppt-3d"
+      ],
+      "note": "Skill `officecli` (root SKILL.md) là skill gốc; 10 skill còn lại là scene layer, gọi bằng `officecli load_skill <name>`; morph-ppt có thư mục reference/ (helper python/shell) nên phải copy nguyên cả thư mục. ⚠️ `officecli watch` mở server preview cổng 26315 — chỉ dùng khi người dùng yêu cầu; mọi lệnh có thể auto-start resident nền, dùng OFFICECLI_NO_AUTO_RESIDENT=1 cho lệnh chạy một lần."
+    },
+    {
+      "id": "typesafe-ai",
+      "repo": "https://github.com/typesafe-ai/skills.git",
+      "ref": "65a39f393687675ce170e6094757de20370365b9",
+      "skillsRootInRepo": "skills",
+      "install": "git clone --depth 1 https://github.com/typesafe-ai/skills.git <tmp> && copy <tmp>/skills/typesafe-ai vào ~/.agents/skills. (Skill chính thức của TypeSafe: hướng dẫn thiết kế workflow, đọc docs live.)",
+      "skills": ["typesafe-ai"]
+    },
+    {
+      "id": "dsh-jev-verify",
+      "kind": "market-plugin (npm)",
+      "repo": "https://github.com/xienda/dsh-jev-verify",
+      "npm": "dsh-jev-verify",
+      "installedVersion": "0.7.2 (curated; npm latest 0.7.4)",
+      "install": "dsh plugin --profile web add dsh-jev-verify   (hoặc GUI: Settings → Plugin Market → tìm 'jev' → Install). Plugin tự thêm vào dsh.profile.bundles của profile web; profile có patchReload: live nên tool xuất hiện ngay, profile khác thì restart harness.",
+      "tools": ["jev_decision", "jev_verify", "jev_guard_status", "jev_overview"],
+      "requires": "TYPESAFE_API_KEY — qua DSH credentials seam: thêm 'TYPESAFE_API_KEY: <key>' vào mục refs của <DSH_HOME>\\.credentials.yaml (hoặc nhập trong Settings → Plugins → Plugin configuration → Jev). KHÔNG commit key vào repo.",
+      "note": "Đây là plugin Jev CHÍNH của máy — KHÔNG dựng lại plugin tự chế (bản cũ dsh-jev + tool jev_evaluate + CLI tools\\jev + skill jev đã bị gỡ 2026-09-30). Market còn nhiều lựa chọn khác: dsh-jev-tools (prune output/injection scan/skill pick), dsh-jev-guard & dsh-jev-interceptor (van an toàn trước khi chạy lệnh — chỉ chọn 1), dsh-jev-decide, jevcore-dsh, @khorsheed/dsh-typesafe.",
+      "endpoint": "POST https://api.typesafe.ai/v1/systemone (model mặc định jev-latest)"
+    }
+  ]
+}

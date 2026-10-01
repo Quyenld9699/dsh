@@ -1,0 +1,150 @@
+{
+  "createdAt": "2026-09-30T16:52:19.9616724+07:00",
+  "source": "C:\\Users\\QuyenLD\\.dsh",
+  "dshProfile": "web",
+  "dshCliVersion": "0.2.0-rc.2",
+  "credentialsNote": "credentials.redacted.yaml = ban che key. Ban that: C:\\Users\\QuyenLD\\.dsh-backup-secrets\\credentials-20260930-165128.yaml (ngoai repo git)",
+  "fileCount": 28,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 8888,
+      "sha256": "85c79c2786b50ce7f8b47fbd0303f40cc31ad75d8cfe59e572428549ae8508e0"
+    },
+    {
+      "path": "restore.ps1",
+      "bytes": 4354,
+      "sha256": "af26173c2c3fbb82e3c449048d25c7226c19ce26a83c9979b726a0f07faf3873"
+    },
+    {
+      "path": "dsh-home\\.anonymous-user-id",
+      "bytes": 37,
+      "sha256": "5d06411e342b9dba008122664ebb22588e53b62120f528852467e6ba167fb0c8"
+    },
+    {
+      "path": "dsh-home\\credentials.redacted.yaml",
+      "bytes": 399,
+      "sha256": "29ff986a643d6088d52b85c841b2f60640c28cd04c16f90db889fd7a54f1b662"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\cordis.patch.yml",
+      "bytes": 4746,
+      "sha256": "2f28517f36db63dc9e0caef8aa78330fcbcac0bce0b9c11ebd994ba94922de08"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\cordis.yml",
+      "bytes": 223,
+      "sha256": "c300dcf2ebc5f02062d6591268d29d3db6fe45e0cb138f5467276fe2ba06076e"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\package.json",
+      "bytes": 808,
+      "sha256": "7627b302eb074ecfc8705bb64f89f587296a88ddd2351d8fd543af0456a2969d"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\pnpm-lock.yaml",
+      "bytes": 63097,
+      "sha256": "673b65038994d0cbfd17e5e4a5b57eb4eedcd5c76796d770e01ea762dda5e112"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\pnpm-workspace.yaml",
+      "bytes": 161,
+      "sha256": "7b51f96a9a309539f3fc0d0e2c85239deea1f34a334a2697f7cf75b7d72e0ba1"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.dsh-market\\discovery-compatibility-v1.json",
+      "bytes": 39014,
+      "sha256": "727d519db2dc0e3053bb27983cc5161c7d7b0e615e6ac4aacd8ac1fe7a354e9b"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.dsh-market\\log.ndjson",
+      "bytes": 2763,
+      "sha256": "d4c2debfa5c5c055d38f9f19cc4e2ec024524efc0021b410a54f62890294ae51"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.dsh-market\\state.json",
+      "bytes": 79,
+      "sha256": "a6d9fa86f90ca35e00217ad6d54ed82a5e8d6f95159703ee40884ffe7044e75a"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-1Z2rUj\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-7Khcsr\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-7vu053\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-atd1UV\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-H63ghS\\pnpm.log",
+      "bytes": 616,
+      "sha256": "e63b019fd2dae17130d105ad024bfb7a76d243f2110c7ce58c3fd6858178f6aa"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-IpUH4e\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-JALDbh\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-KqzwND\\pnpm.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "dsh-home\\profiles\\web\\.plugin-manager\\logs\\operation-Z4Ns7W\\pnpm.log",
+      "bytes": 499,
+      "sha256": "ad3185c862e100cd7aaa810bcb4592726b8a169933ff0d08d94149065471f82e"
+    },
+    {
+      "path": "dsh-home\\storages\\workspace.json",
+      "bytes": 1070,
+      "sha256": "422d7f94892db83c7f4b1821ae54894caaf268597bca08f33d447f87af810f30"
+    },
+    {
+      "path": "dsh-home\\storages\\cost-meter\\ledger.json",
+      "bytes": 148173,
+      "sha256": "648503796fe211299a63561257d6673e617fbf755307ca835e2fe9b752ee5689"
+    },
+    {
+      "path": "dsh-home\\storages\\session_projcache\\sessions\\session-a30c201b-1b18-45ec-a16d-38932c2ef01f.json",
+      "bytes": 14792,
+      "sha256": "bb51a7d7ca89131b87e3afb8b8dcfb8350c5424e90a1a0eaa9ef01d666bcd127"
+    },
+    {
+      "path": "dsh-home\\storages\\session_projcache\\sessions\\session-ae54e79b-68a2-43b2-a777-cecd663b1ef3.json",
+      "bytes": 22189,
+      "sha256": "25879ac9ed441c7e7ce9ec8a4ddaa8fd14b3fcd2b708d46c5dceeee2f06cee88"
+    },
+    {
+      "path": "inventory\\installed-packages.txt",
+      "bytes": 4754,
+      "sha256": "750d1c717ea0760c94e0829f320655969d41ce97498c3c35403f08a34c667882"
+    },
+    {
+      "path": "inventory\\profile-package.json",
+      "bytes": 810,
+      "sha256": "4bf478344b8390647f968bfb0292208ca7e88da6d119eb2e1e6e51777cc51808"
+    },
+    {
+      "path": "inventory\\runtime.txt",
+      "bytes": 695,
+      "sha256": "d95f0cef3fc868e2bb70e546f1cb07481e09c2d62b895a6d9d266b9e39c91853"
+    }
+  ]
+}

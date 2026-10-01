@@ -1,0 +1,48 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "blocking": {
+      "type": "noul",
+      "noul": 0.25
+    },
+    "category": {
+      "type": "choice",
+      "choice": "missing-credential",
+      "confidence": 1.0,
+      "probabilities": {
+        "other": 0.0,
+        "network-registry": 0.0,
+        "filesystem-permission": 0.0,
+        "config-syntax": 0.0,
+        "peer-version-conflict": 0.0,
+        "runtime-crash": 0.0,
+        "missing-credential": 1.0
+      }
+    },
+    "severity": {
+      "type": "score",
+      "score": 1.92,
+      "confidence": 0.92,
+      "legend": {
+        "0": "Informational noise, nothing to do",
+        "1": "Degraded but usable, workaround exists",
+        "2": "Blocking: the harness or a required tool cannot start",
+        "3": "Data loss, security exposure, or silent wrong results"
+      },
+      "probabilities": {
+        "0": 0.0,
+        "1": 0.08,
+        "2": 0.92,
+        "3": 0.0
+      }
+    },
+    "evidence_sufficient": {
+      "type": "noul",
+      "noul": 0.65
+    }
+  },
+  "usage": {
+    "input_tokens": 721,
+    "output_tokens": 139
+  }
+}

@@ -1,0 +1,59 @@
+# dsh-market log export
+dsh-market: 1.66.7
+dsh host: not locatable from this process
+platform: win32 x64
+node: v24.18.1
+profile: desktop
+timestamps: UTC — this machine is UTC+07:00 (Asia/Saigon), so add 7h for local time
+
+## profile state
+dependencies (8):
+  @changfenhuang/dsh-genui: 0.11.3
+  @linxin666/dsh-client-ui-skill-explorer: 0.4.4
+  @tt-a1i/archify-dsh: ^0.1.0
+  dsh-better-sidebar: 0.24.1
+  dsh-bloom-theme: 0.16.0
+  dsh-cost-meter: 1.8.3
+  dsh-plugin-whale-pet: ^0.2.9
+  dshmarket: ^1.66.7
+bundles (13):
+  @deepseek-ai/dsh-base: ok
+  @deepseek-ai/dsh-web-app: ok
+  @deepseek-ai/dsh-experimental-agent-team-profile: ok
+  @deepseek-ai/dsh-experimental-schedule-bundle: ok
+  @deepseek-ai/dsh-experimental-auto-review: ok
+  dsh-plugin-whale-pet: ok
+  dshmarket: ok
+  dsh-better-sidebar: ok
+  dsh-cost-meter: ok
+  dsh-bloom-theme: ok
+  @changfenhuang/dsh-genui: ok
+  @linxin666/dsh-client-ui-skill-explorer: ok
+  @tt-a1i/archify-dsh: ok
+
+## previous sessions (persisted log)
+{"at":"2026-10-01T02:38:00.093Z","level":"info","event":"region","detail":"no region on record; network check chose global"}
+{"at":"2026-10-01T02:38:10.220Z","level":"info","event":"update","detail":"dshmarket -> dshmarket@1.66.7 exit=0"}
+{"at":"2026-10-01T02:38:20.527Z","level":"info","event":"install","detail":"DSH-better-sidebar: pinned to the registry's latest, 0.24.1, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-10-01T02:38:27.829Z","level":"info","event":"install","detail":"dsh-better-sidebar@0.24.1 exit=0 hot=true"}
+{"at":"2026-10-01T02:40:49.895Z","level":"info","event":"install","detail":"dsh-cost-meter: pinned to the registry's latest, 1.8.3, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-10-01T02:40:56.251Z","level":"info","event":"install","detail":"dsh-cost-meter@1.8.3 exit=0 hot=true"}
+{"at":"2026-10-01T02:46:18.847Z","level":"info","event":"install","detail":"dsh-bloom-theme: pinned to the registry's latest, 0.16.0, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-10-01T02:46:21.257Z","level":"info","event":"install","detail":"dsh-bloom-theme@0.16.0 exit=0 hot=true"}
+{"at":"2026-10-01T02:48:22.366Z","level":"info","event":"install","detail":"dsh-genui: pinned to the registry's latest, 0.11.3, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-10-01T02:48:26.690Z","level":"info","event":"install","detail":"@changfenhuang/dsh-genui@0.11.3 exit=0 hot=true"}
+{"at":"2026-10-01T02:51:10.691Z","level":"info","event":"install","detail":"dsh-web#packages/dsh-skill-explorer: pinned to the registry's latest, 0.4.4, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-10-01T02:51:12.850Z","level":"info","event":"install","detail":"@linxin666/dsh-client-ui-skill-explorer@0.4.4 exit=0 hot=true"}
+
+## events this session
+2026-10-01T02:51:10.691Z [info] install: dsh-web#packages/dsh-skill-explorer: pinned to the registry's latest, 0.4.4, so pnpm's fresh-release hold cannot substitute an older version silently
+2026-10-01T02:51:12.850Z [info] install: @linxin666/dsh-client-ui-skill-explorer@0.4.4 exit=0 hot=true
+## browser
+client bundle evaluations: 1
+market roots in the document: 1
+portal containers: 0
+plugin cards rendered: 0
+page translated by the browser: no
+document baseURI: dsh-app://app/
+page URL: dsh-app://app/
+user agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) @deepseek-ai/dsh-desktop/0.2.0-rc.2 Chrome/152.0.7977.54 Electron/44.0.0 Safari/537.36

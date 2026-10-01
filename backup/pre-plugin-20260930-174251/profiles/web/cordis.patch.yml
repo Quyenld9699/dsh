@@ -1,0 +1,162 @@
+# Your patch layer for this dsh profile, applied after every bundle layer:
+# a top-level YAML array of loader patch entries (id-targeted config
+# overrides, disables, and insert lists; `!!js` expressions allowed).
+- id: ui-settings-general
+  name: "@deepseek-ai/dsh-client-ui-settings-general"
+  config:
+    welcomeNoticeVersion: 2026-09-28.1
+- id: llm-pi-ai
+  name: "@deepseek-ai/dsh-llm-pi-ai"
+  config:
+    providers:
+      inceptionlabs:
+        displayName: Inceptionlabs AI
+        apiKeyEnv: INCEPTIONLABS_API_KEY
+        api: openai-completions
+        baseURL: https://api.inceptionlabs.ai/v1
+        models:
+          - id: mercury-2
+            name: "Inception: Mercury 2"
+            contextWindow: 128000
+          - id: mercury-2.5
+            name: "Inception: Mercury 2.5"
+            contextWindow: 260000
+      google:
+        models:
+          - id: gemini-2.5-flash
+            name: Gemini 2.5 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-2.5-flash-lite
+            name: Gemini 2.5 Flash-Lite
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3-flash-preview
+            name: Gemini 3 Flash Preview
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.1-flash-lite
+            name: Gemini 3.1 Flash Lite
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.1-flash-lite-image
+            name: Nano Banana 2 Lite
+            contextWindow: 65536
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.1-flash-lite-preview
+            name: Gemini 3.1 Flash Lite Preview
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.1-flash-live-preview
+            name: Gemini 3.1 Flash Live Preview
+            contextWindow: 131072
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.5-flash
+            name: Gemini 3.5 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.5-flash-lite
+            name: Gemini 3.5 Flash Lite
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.6-flash
+            name: Gemini 3.6 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.7-flash
+            name: Gemini 3.7 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-3.8-flash
+            name: Gemini 3.8 Flash
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+          - id: gemini-flash-latest
+            name: Gemini Flash Latest
+            contextWindow: 1048576
+            maxTokens: 65536
+            input:
+              - text
+              - image
+        apiKeyEnv: GOOGLE_API_KEY
+- id: ui-theme
+  name: "@deepseek-ai/dsh-client-ui-theme"
+  config:
+    preference: dark
+- id: subagent-model-selection-settings
+  name: "@deepseek-ai/dsh-tool-subagent/model-selection-settings"
+  config:
+    enabled: true
+    allowedModels:
+      - provider: inceptionlabs
+        model: mercury-2
+      - provider: inceptionlabs
+        model: mercury-2.5
+      - provider: google
+        model: gemini-2.5-flash
+      - provider: google
+        model: gemini-2.5-flash-lite
+      - provider: google
+        model: gemini-3-flash-preview
+      - provider: google
+        model: gemini-3.1-flash-lite
+      - provider: google
+        model: gemini-3.1-flash-lite-image
+      - provider: google
+        model: gemini-3.1-flash-lite-preview
+      - provider: google
+        model: gemini-3.1-flash-live-preview
+      - provider: google
+        model: gemini-3.5-flash
+      - provider: google
+        model: gemini-3.5-flash-lite
+      - provider: google
+        model: gemini-3.6-flash
+      - provider: google
+        model: gemini-3.7-flash
+      - provider: google
+        model: gemini-3.8-flash
+      - provider: google
+        model: gemini-flash-latest
+      - provider: deepseek-official
+        model: deepseek-flash
+- id: session-log-deepseek
+  name: "@deepseek-ai/dsh-session-log-deepseek"
+  config:
+    enabled: false

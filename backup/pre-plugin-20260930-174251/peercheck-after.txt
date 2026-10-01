@@ -1,0 +1,4 @@
+runtime dsh        : 0.2.0-rc.2
+profile            : C:\Users\QuyenLD\.dsh\profiles\web
+row/manifest đã soi: 245
+KẾT LUẬN   : OK — không thấy row nào bị dsh từ chối.

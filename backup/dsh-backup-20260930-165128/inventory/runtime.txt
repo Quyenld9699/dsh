@@ -1,0 +1,13 @@
+backup_stamp            : 20260930-165128
+dsh_home               : C:\Users\QuyenLD\.dsh
+dsh_profile            : web
+dsh_profile_dir        : C:\Users\QuyenLD\.dsh\profiles\web
+dsh_web_url            : http://127.0.0.1:3080
+dsh_cli_version        : 0.2.0-rc.2
+npx_checkout           : C:\Users\QuyenLD\AppData\Local\npm-cache\_npx\1e7f6d9597241db0
+node                   : v24.20.0
+pnpm                   : 12.3.4
+npm                    : 12.0.2
+os                     : Microsoft Windows NT 10.0.26300.0
+credentials_refs       : DEEPSEEK_API_KEY, INCEPTIONLABS_API_KEY, GOOGLE_API_KEY
+credentials_real_copy  : C:\Users\QuyenLD\.dsh-backup-secrets\credentials-20260930-165128.yaml

@@ -1,0 +1,28 @@
+{
+  "department": {
+    "type": "choice",
+    "instructions": "Which team should handle this?",
+    "criteria": {
+      "billing": "Payments, invoicing, refunds",
+      "technical": "Bugs, outages, integrations",
+      "sales": "Pricing, upgrades, new accounts"
+    }
+  },
+  "frustration": {
+    "type": "score",
+    "instructions": "How frustrated is the customer?",
+    "criteria": [
+      "Calm, just stating facts",
+      "Frustrated but civil",
+      "Very angry, strong language"
+    ]
+  },
+  "is_urgent": {
+    "type": "noul",
+    "instructions": "The message conveys urgency or time-sensitivity",
+    "criteria": {
+      "true": "Explicitly time-sensitive",
+      "false": "No urgency expressed"
+    }
+  }
+}

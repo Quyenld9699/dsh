@@ -1,0 +1,38 @@
+{
+  "unit": {
+    "name": "workspace",
+    "version": 2
+  },
+  "global": {
+    "initialized": true,
+    "workspaceIds": [
+      "9750a408-552a-4edf-a359-06dcf0e9808c",
+      "e97c84f8-9e13-47ca-912b-5017b5139672"
+    ],
+    "archivedSessionIds": [],
+    "pinnedSessionIds": [],
+    "defaultWorkspaceId": "e97c84f8-9e13-47ca-912b-5017b5139672"
+  },
+  "tables": {
+    "workspaces": {
+      "e97c84f8-9e13-47ca-912b-5017b5139672": {
+        "path": "C:\\Users\\QuyenLD\\OneDrive\\Documents\\deepseek-harness\\default-workspace",
+        "title": "default-workspace",
+        "sessionIds": [
+          "session-ae54e79b-68a2-43b2-a777-cecd663b1ef3"
+        ],
+        "createdAt": "2026-09-30T08:53:32.368Z",
+        "updatedAt": "2026-09-30T08:53:32.423Z"
+      },
+      "9750a408-552a-4edf-a359-06dcf0e9808c": {
+        "path": "D:\\dsh",
+        "title": "dsh",
+        "sessionIds": [
+          "session-a30c201b-1b18-45ec-a16d-38932c2ef01f"
+        ],
+        "createdAt": "2026-09-30T09:15:30.152Z",
+        "updatedAt": "2026-09-30T09:15:30.192Z"
+      }
+    }
+  }
+}

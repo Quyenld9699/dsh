@@ -1,0 +1,539 @@
+{
+  "version": 7,
+  "record": {
+    "identity": {
+      "formatVersion": 4,
+      "createdAt": 1790759730176,
+      "cwd": "D:\\dsh",
+      "isSeeded": false,
+      "inheritedEventCount": 0
+    },
+    "rows": {
+      "title": {
+        "ver": 1,
+        "seq": 123,
+        "val": "Sao lưu cấu hình DeepSeek và plugin dsh"
+      },
+      "titleInput": {
+        "ver": 3,
+        "seq": 123,
+        "val": {
+          "first": {
+            "seq": 18,
+            "text": "lần cuối khi đang cài JEV và test sử dụng thì lỗi:\nnpx @deepseek-ai/dsh web\r\nnpm notice run npx\r\nnpm notice run dsh web\r\ndsh: disabling profile plugin row \"tools\": Plugin @deepseek-ai/dsh-tools@0.1.5-rc.2 is incompatible with dsh 0.2.0-rc.2: peerDependencies {\"@deepseek-ai/dsh-invariants\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-agent\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-llm\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-code-runtime\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-scope\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-session\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-user-approval\":\"^0.1.5-rc.2\",\"@deepseek-ai/dsh-system-prompt\":\"^0.1.5-rc.2\"}. Running it may cause crashes or data loss. Update the plugin or install a plugin version compatible with this dsh runtime. To accept this risk explicitly, grant the exact-version exemption for @deepseek-ai/dsh-tools@0.1.5-rc.2 on dsh 0.2.0-rc.2 with `dsh plugin allow-version` or the plugin manager, then retry the installation or restart dsh. Exact-version exemption: not active.\r\n[dsh-cost-meter] 已加载,账本:C:\\Users\\QuyenLD\\.dsh\\storages\\cost-meter\\ledger.json\r\ndsh: startup failed: 1 required plugin did not activate\r\n\r\nPlugins waiting for services (10):\r\n  Plugin                     Missing services\r\n  agent-loop (required)      tools\r\n  timeout-policy             tools\r\n  spill-policy               tools\r\n  session-checkpoint-policy  tools\r\n  mcp-resources              tools\r\n  cordis-host-runner         tools\r\n  cordis-inspect-providers   cordisInspect, tools\r\n  better-sidebar             tools\r\n  tool-agent-team            tools\r\n  jev-verify                 tools\r\n\r\nFull diagnostics: C:\\Users\\QuyenLD\\.dsh\\logs\\startup-2026-09-30T08-51-47.628Z-db32c015-a29a-427d-930c-26b5b1aea8e1.log\r\nmake: *** [Makefile:11: ai] Error 1\r\n\ntắt đi bật lại không được\ntạm thời chưa cài lại JEV\ntôi muốn bạn lưu backup các config deepseek, các plugin cài hiện tại, UI config vào thư mục này"
+          },
+          "count": 1,
+          "lastSeq": 18
+        }
+      },
+      "llmRetry": {
+        "ver": 1,
+        "seq": 123,
+        "val": {}
+      },
+      "sandboxMode": {
+        "ver": 1,
+        "seq": 123,
+        "val": "danger-full-access"
+      },
+      "goal": {
+        "ver": 6,
+        "seq": 123,
+        "val": {
+          "current": null,
+          "seenGoalIds": [],
+          "failure": null
+        }
+      },
+      "tokenUsage": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "totals": {
+            "uncachedInputTokens": 36563,
+            "outputTokens": 12342,
+            "cacheReadTokens": 344704,
+            "cacheWriteTokens": 0
+          },
+          "last": {
+            "turn": 1,
+            "step": 12,
+            "buckets": {
+              "uncachedInputTokens": 261,
+              "outputTokens": 361,
+              "cacheReadTokens": 48896,
+              "cacheWriteTokens": 0
+            }
+          }
+        }
+      },
+      "contextPressure": {
+        "ver": 5,
+        "seq": 123,
+        "val": {
+          "surfaceTokens": 34109,
+          "contextWindow": 1000000,
+          "pressureTokens": 49157,
+          "sampledSurfaceTokens": 32601
+        }
+      },
+      "contextBreakdown": {
+        "ver": 5,
+        "seq": 123,
+        "val": {
+          "nodes": [
+            {
+              "seq": 16,
+              "heuristicTokens": 2833,
+              "system": true
+            },
+            {
+              "seq": 17,
+              "heuristicTokens": 26,
+              "system": false
+            },
+            {
+              "seq": 18,
+              "heuristicTokens": 480,
+              "system": false
+            },
+            {
+              "seq": 19,
+              "heuristicTokens": 106,
+              "system": false
+            },
+            {
+              "seq": 20,
+              "heuristicTokens": 3679,
+              "system": false
+            },
+            {
+              "seq": 28,
+              "heuristicTokens": 298,
+              "system": false
+            },
+            {
+              "seq": 30,
+              "heuristicTokens": 113,
+              "system": false
+            },
+            {
+              "seq": 32,
+              "heuristicTokens": 91,
+              "system": false
+            },
+            {
+              "seq": 36,
+              "heuristicTokens": 280,
+              "system": false
+            },
+            {
+              "seq": 38,
+              "heuristicTokens": 185,
+              "system": false
+            },
+            {
+              "seq": 40,
+              "heuristicTokens": 3493,
+              "system": false
+            },
+            {
+              "seq": 44,
+              "heuristicTokens": 534,
+              "system": false
+            },
+            {
+              "seq": 46,
+              "heuristicTokens": 315,
+              "system": false
+            },
+            {
+              "seq": 48,
+              "heuristicTokens": 645,
+              "system": false
+            },
+            {
+              "seq": 52,
+              "heuristicTokens": 907,
+              "system": false
+            },
+            {
+              "seq": 54,
+              "heuristicTokens": 430,
+              "system": false
+            },
+            {
+              "seq": 56,
+              "heuristicTokens": 427,
+              "system": false
+            },
+            {
+              "seq": 60,
+              "heuristicTokens": 600,
+              "system": false
+            },
+            {
+              "seq": 62,
+              "heuristicTokens": 1399,
+              "system": false
+            },
+            {
+              "seq": 64,
+              "heuristicTokens": 287,
+              "system": false
+            },
+            {
+              "seq": 68,
+              "heuristicTokens": 1400,
+              "system": false
+            },
+            {
+              "seq": 70,
+              "heuristicTokens": 122,
+              "system": false
+            },
+            {
+              "seq": 72,
+              "heuristicTokens": 1930,
+              "system": false
+            },
+            {
+              "seq": 76,
+              "heuristicTokens": 2006,
+              "system": false
+            },
+            {
+              "seq": 78,
+              "heuristicTokens": 33,
+              "system": false
+            },
+            {
+              "seq": 80,
+              "heuristicTokens": 2167,
+              "system": false
+            },
+            {
+              "seq": 84,
+              "heuristicTokens": 760,
+              "system": false
+            },
+            {
+              "seq": 86,
+              "heuristicTokens": 470,
+              "system": false
+            },
+            {
+              "seq": 88,
+              "heuristicTokens": 276,
+              "system": false
+            },
+            {
+              "seq": 92,
+              "heuristicTokens": 455,
+              "system": false
+            },
+            {
+              "seq": 94,
+              "heuristicTokens": 1364,
+              "system": false
+            },
+            {
+              "seq": 96,
+              "heuristicTokens": 21,
+              "system": false
+            },
+            {
+              "seq": 100,
+              "heuristicTokens": 1642,
+              "system": false
+            },
+            {
+              "seq": 102,
+              "heuristicTokens": 1197,
+              "system": false
+            },
+            {
+              "seq": 104,
+              "heuristicTokens": 36,
+              "system": false
+            },
+            {
+              "seq": 108,
+              "heuristicTokens": 1456,
+              "system": false
+            },
+            {
+              "seq": 110,
+              "heuristicTokens": 113,
+              "system": false
+            },
+            {
+              "seq": 112,
+              "heuristicTokens": 25,
+              "system": false
+            },
+            {
+              "seq": 116,
+              "heuristicTokens": 197,
+              "system": false
+            },
+            {
+              "seq": 119,
+              "heuristicTokens": 970,
+              "system": false
+            },
+            {
+              "seq": 120,
+              "heuristicTokens": 341,
+              "system": false
+            }
+          ],
+          "breakdown": {
+            "systemTokens": 2833,
+            "toolsTokens": 6939,
+            "messageTokens": 31276
+          }
+        }
+      },
+      "turnBoundary": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "openTurnStartSeq": 12,
+          "lastStepStartSeq": 122,
+          "lastStepBoundary": {
+            "kind": "start",
+            "seq": 122
+          },
+          "lastTurn": 1
+        }
+      },
+      "inbox": {
+        "ver": 1,
+        "seq": 123,
+        "val": {
+          "next-turn": [],
+          "next-step": []
+        }
+      },
+      "sessionStats": {
+        "ver": 1,
+        "seq": 123,
+        "val": {
+          "turns": 1,
+          "steps": 12,
+          "llmMs": 57554,
+          "toolMs": 54483,
+          "ttftMs": 10290,
+          "ttftSteps": 12,
+          "decodeMs": 47264,
+          "decodeTokens": 12342,
+          "lastTurn": 1,
+          "openStep": {
+            "turn": 1,
+            "step": 13,
+            "startTime": 1790761861849,
+            "firstTokenTime": null
+          },
+          "pendingCalls": {}
+        }
+      },
+      "turnOutline": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "turns": [
+            {
+              "turn": 1,
+              "seq": 12,
+              "prompt": "lần cuối khi đang cài JEV và test sử dụng thì lỗi…",
+              "response": ""
+            }
+          ],
+          "draft": "Đã nắm được cấu hình. Còn một điểm cần bạn quyết trước khi tôi ghi file."
+        }
+      },
+      "agentPreset": {
+        "ver": 1,
+        "seq": 123,
+        "val": "standard"
+      },
+      "userQuestions": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "inheritedEventCount": 0,
+          "timed": false,
+          "questions": {
+            "active": [],
+            "settled": []
+          }
+        }
+      },
+      "subagentCatalog": {
+        "ver": 3,
+        "seq": 123,
+        "val": {
+          "inheritedEventCount": 0
+        }
+      },
+      "subagentTiming": {
+        "ver": 3,
+        "seq": 123,
+        "val": {
+          "descriptorSeen": false,
+          "settledMs": 0,
+          "pendingTurnStart": 1790761749615
+        }
+      },
+      "subagent": {
+        "ver": 2,
+        "seq": 123,
+        "val": {}
+      },
+      "agentTeam": {
+        "ver": 4,
+        "seq": 123,
+        "val": {
+          "id": "session-a30c201b-1b18-45ec-a16d-38932c2ef01f",
+          "members": [],
+          "tasks": [],
+          "messages": [],
+          "delivered": [],
+          "nextTaskNumber": 1
+        }
+      },
+      "costUsage": {
+        "ver": 10,
+        "seq": 123,
+        "val": {
+          "provider": "deepseek-official",
+          "model": "deepseek-flash",
+          "totals": {
+            "input": 36563,
+            "output": 12342,
+            "cacheRead": 344704,
+            "cacheWrite": 0,
+            "reasoning": 0,
+            "cost": 0.027847524
+          },
+          "byModel": {
+            "deepseek-flash": {
+              "input": 36563,
+              "output": 12342,
+              "cacheRead": 344704,
+              "cacheWrite": 0,
+              "reasoning": 0,
+              "cost": 0.027847524
+            }
+          },
+          "byProviderModel": {
+            "deepseek-official:deepseek-flash": {
+              "input": 36563,
+              "output": 12342,
+              "cacheRead": 344704,
+              "cacheWrite": 0,
+              "reasoning": 0,
+              "cost": 0.027847524
+            }
+          },
+          "createdAt": 1790759730176,
+          "seedEndSeq": -1,
+          "seedLength": -1,
+          "seedDeducted": true,
+          "shadow": {
+            "totals": {
+              "input": 0,
+              "output": 0,
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "reasoning": 0,
+              "cost": 0
+            },
+            "byModel": {},
+            "byProviderModel": {}
+          },
+          "recent": [
+            {
+              "fp": "deepseek-flash|2794|1698|44416|0|0",
+              "at": 1790761858738
+            },
+            {
+              "fp": "deepseek-flash|261|361|48896|0|0",
+              "at": 1790761861822
+            }
+          ],
+          "nativeSearchIds": [],
+          "last": {
+            "key": "1:12",
+            "provider": "deepseek-official",
+            "model": "deepseek-flash",
+            "buckets": {
+              "input": 261,
+              "output": 361,
+              "cacheRead": 48896,
+              "cacheWrite": 0,
+              "reasoning": 0
+            },
+            "cost": 0.0008048759999999999
+          }
+        }
+      },
+      "permissions": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "preset": "danger-full-access",
+          "sandbox": "danger-full-access",
+          "approval": "never",
+          "seeded": true
+        }
+      },
+      "todos": {
+        "ver": 2,
+        "seq": 123,
+        "val": null
+      },
+      "plan": {
+        "ver": 3,
+        "seq": 123,
+        "val": {
+          "active": false,
+          "wanted": null,
+          "running": null,
+          "activeAtLastHeader": false
+        }
+      },
+      "subagentModelSelectionPolicy": {
+        "ver": 1,
+        "seq": 123,
+        "val": null
+      },
+      "modelSelection": {
+        "ver": 2,
+        "seq": 123,
+        "val": {
+          "lastUsed": {
+            "provider": "deepseek-official",
+            "model": "deepseek-flash",
+            "reasoningEffort": "high"
+          },
+          "pending": null
+        }
+      },
+      "sessionListMetadata": {
+        "ver": 1,
+        "seq": 123,
+        "val": {
+          "blank": false,
+          "lastPromptAt": 1790761749668
+        }
+      },
+      "imageLimits": {
+        "ver": 1,
+        "seq": 123,
+        "val": null
+      }
+    }
+  }
+}

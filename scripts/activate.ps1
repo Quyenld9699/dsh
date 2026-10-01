@@ -1,17 +1,15 @@
-# DSH Vault — kích hoạt lại toàn bộ trên máy mới / sau cài lại.
+# DSH Vault — kích hoạt lại trên máy mới / sau cài lại.
 # Chạy:  powershell -ExecutionPolicy Bypass -File D:\dsh\scripts\activate.ps1
-#        (hoặc:  .\scripts\activate.ps1 -DshHome "C:\custom\.dsh" -Force)
+#        (hoặc:  .\scripts\activate.ps1 -DshHome "C:\custom\.dsh")
 param(
-    [string]$DshHome = "",
-    [switch]$Force
+    [string]$DshHome = ""
 )
 
 $ErrorActionPreference = 'Continue'
 $repo = Split-Path -Parent $PSScriptRoot   # D:\dsh
 if ($DshHome -eq "") { $DshHome = if ($env:DSH_HOME) { $env:DSH_HOME } else { Join-Path $env:USERPROFILE ".dsh" } }
 $profileDir = Join-Path $DshHome "profiles\web"
-$agentsHome = Join-Path $env:USERPROFILE ".agents"
-$skillsRoot = Join-Path $agentsHome "skills"
+$profilePkg = Join-Path $profileDir "package.json"
 
 Write-Host "== DSH Vault activate ==" -ForegroundColor Cyan
 Write-Host "Repo     : $repo"
@@ -21,62 +19,61 @@ if (-not (Test-Path $profileDir)) {
     exit 1
 }
 
-# 1) Static plugin: dsh-skill-manager
-$srcStatic = Join-Path $repo "plugins\dsh-skill-manager\static"
-$dstPkg    = Join-Path $profileDir "node_modules\dsh-skill-manager"
-if (Test-Path $srcStatic) {
-    New-Item -ItemType Directory -Force -Path (Split-Path -Parent $dstPkg) | Out-Null
-    Copy-Item $srcStatic $dstPkg -Recurse -Force
-    Write-Host "[1/3] Static plugin -> $dstPkg" -ForegroundColor Green
+# Đọc profile package.json 1 lần
+$pkgText = if (Test-Path $profilePkg) { Get-Content $profilePkg -Raw -Encoding UTF8 } else { "" }
+
+# 1) Skill Center (plugin market có sẵn, KHÔNG thuộc vault này)
+if ($pkgText -match 'dsh-client-ui-skill-explorer') {
+    Write-Host "[1/3] Skill Center đã có trong profile (dsh-client-ui-skill-explorer)." -ForegroundColor Green
 } else {
-    Write-Host "[1/3] Bỏ qua (không có static): $srcStatic" -ForegroundColor Yellow
+    Write-Host "[1/3] Chưa thấy Skill Center — cài qua Plugin Market (dshmarket) rồi restart harness." -ForegroundColor Yellow
 }
 
-# 2) Loader row trong cordis.patch.yml (idempotent)
-$patch = Join-Path $profileDir "cordis.patch.yml"
-if (Test-Path $patch) {
-    $content = Get-Content $patch -Raw -Encoding UTF8
-    if ($content -notmatch "skillmgr-static") {
-        if ($content.Trim() -eq '[]' -or $content.Trim() -eq '') {
-            $block = @"
-- insert:
-    - id: skillmgr-static
-      name: 'dsh-skill-manager'
-"@
-        } else {
-            $block = "`n- insert:`n    - id: skillmgr-static`n      name: 'dsh-skill-manager'`n"
+# 2) Plugin Jev (TypeSafe) — dsh-jev-verify từ market/npm
+#    QUAN TRỌNG: mọi bản dsh-jev-verify (0.2.0…0.7.4) ghim cứng @deepseek-ai/dsh-tools@0.1.5-rc.2.
+#    Cài thẳng bằng 'dsh plugin add' sẽ làm row "tools" bị disable và dsh KHÔNG bật được web.
+#    Vì vậy luôn đi qua guard + ghim dsh-tools về đúng bản runtime. Chi tiết: D:\dsh\backup\JEV-RCA.md
+$guard = Join-Path $PSScriptRoot 'jev-safe-install.ps1'
+$runtimeVer = ""
+try { $runtimeVer = (& dsh --version) 2>$null | Select-Object -First 1 } catch { }
+$toolsManifest = Join-Path $profileDir "node_modules\@deepseek-ai\dsh-tools\package.json"
+$toolsVer = if (Test-Path $toolsManifest) { (Get-Content $toolsManifest -Raw | ConvertFrom-Json).version } else { "" }
+$toolsOk = ($toolsVer -eq "") -or ($runtimeVer -ne "" -and $toolsVer -eq $runtimeVer)
+if ($pkgText -match 'dsh-jev-verify') {
+    Write-Host "[2/3] dsh-jev-verify đã có trong profile (dependencies/bundles)." -ForegroundColor Green
+    if (-not $toolsOk -and (Test-Path $guard)) {
+        Write-Host "[2/3] CẢNH BÁO: profile đang có @deepseek-ai/dsh-tools=$toolsVer, runtime=$runtimeVer" -ForegroundColor Yellow
+        Write-Host "[2/3] Hậu kiểm tương thích bằng preflight của dsh..." -ForegroundColor Cyan
+        & $guard dsh-jev-verify -PinRuntimeTools -CheckOnly
+        if ($LASTEXITCODE -ne 0) {
+            Write-Host "[!] Profile sẽ KHÔNG bật được. Chạy: D:\dsh\scripts\jev-safe-install.ps1 dsh-jev-verify -PinRuntimeTools" -ForegroundColor Red
         }
-        Add-Content -Path $patch -Value $block -Encoding UTF8
-        Write-Host "[2/3] Đã thêm loader row vào cordis.patch.yml" -ForegroundColor Green
+    }
+} else {
+    if (Test-Path $guard) {
+        Write-Host "[2/3] Cài dsh-jev-verify qua guard (tự ghim @deepseek-ai/dsh-tools về $runtimeVer)..." -ForegroundColor Cyan
+        & $guard dsh-jev-verify -PinRuntimeTools
+        Write-Host "[2/3] Guard exit $LASTEXITCODE — 0 = cài an toàn, 3 = đã tự rollback (profile vẫn lành)." -ForegroundColor Green
     } else {
-        Write-Host "[2/3] cordis.patch.yml đã có skillmgr-static (bỏ qua)" -ForegroundColor DarkGray
+        Write-Host "[2/3] Không thấy $guard — KHÔNG cài thẳng (sẽ làm hỏng profile)." -ForegroundColor Red
+        Write-Host "      Chạy tay: dsh plugin --profile web add dsh-jev-verify  + thêm vào" -ForegroundColor DarkGray
+        Write-Host "      $profileDir\pnpm-workspace.yaml:  overrides: '@deepseek-ai/dsh-tools': $runtimeVer" -ForegroundColor DarkGray
     }
-} else {
-    Write-Host "[2/3] Không thấy cordis.patch.yml — bỏ qua." -ForegroundColor Yellow
 }
 
-# 3) Skills GLOBAL (mọi thư mục con trong skills\ đã được bạn chọn là global)
+# 3) Skill GLOBAL — backup là manifest (không có thư mục skill trong vault)
 $srcSkills = Join-Path $repo "skills"
-if (Test-Path $srcSkills) {
-    New-Item -ItemType Directory -Force -Path $skillsRoot | Out-Null
-    Get-ChildItem $srcSkills -Directory | ForEach-Object {
-        $dst = Join-Path $skillsRoot $_.Name
-        if ((Test-Path (Join-Path $dst "SKILL.md")) -and -not $Force) {
-            Write-Host "[3/3] Bỏ qua (đã có global): $($_.Name)" -ForegroundColor DarkGray
-        } else {
-            Copy-Item $_.FullName $dst -Recurse -Force
-            Write-Host "[3/3] Skill global -> ~/.agents/skills/$($_.Name)" -ForegroundColor Green
-        }
-    }
+if (Test-Path (Join-Path $srcSkills "manifest.json")) {
+    Write-Host "[3/3] Backup skill global = manifest: $srcSkills\manifest.json" -ForegroundColor Green
+    Write-Host "      Restore: nhờ agent cài lại theo manifest (clone repo đúng ref, copy skill vào ~/.agents/skills)." -ForegroundColor DarkGray
 } else {
-    Write-Host "[3/3] Không có thư mục skills — bỏ qua." -ForegroundColor Yellow
+    Write-Host "[3/3] Không có skills\manifest.json — bỏ qua." -ForegroundColor Yellow
 }
 
 Write-Host ""
-Write-Host "== XONG phần tự động. Còn 3 việc tay ==" -ForegroundColor Cyan
-Write-Host "1) Khởi động lại harness (plugin host tĩnh tự chạy; skill ⚡ đánh dấu sẽ tự kích hoạt nếu có file marker theo máy)."
-Write-Host "2) Dựng lại UI 'Skill Manager' (plugin động theo session): mở hội thoại và nhắn agent:"
-Write-Host "     Dựng lại plugin Skill Manager từ $repo\plugins\dsh-skill-manager\dynamic (đọc README, cordis_define + run)."
-Write-Host "3) Kiểm tra danh mục skill ở hội thoại mới."
-Write-Host ""
-Write-Host "Rollback static: xoá '$dstPkg' và dòng insert skillmgr-static trong cordis.patch.yml rồi restart."
+Write-Host "== XONG phần tự động. Việc tay còn lại ==" -ForegroundColor Cyan
+Write-Host "1) TypeSafe key cho Jev — thêm vào mục refs của $DshHome\.credentials.yaml:"
+Write-Host "     TYPESAFE_API_KEY: <key>      (hoặc nhập trong Settings -> Plugins -> Plugin configuration -> Jev)"
+Write-Host "2) Khởi động DSH web (nếu chưa chạy)."
+Write-Host "3) Nhờ agent restore skill global:  'Đọc D:\dsh\skills\manifest.json và cài lại các skill global theo install của từng source.'"
+Write-Host "4) Kiểm tra: hỏi agent 'chạy jev_verify' (benchmark 27 câu) hoặc 'jev_overview' để xem trạng thái Jev."

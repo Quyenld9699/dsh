@@ -1,0 +1,41 @@
+{
+  "blocking": {
+    "type": "noul",
+    "instructions": "Does this log text indicate that the DSH runtime failed to start, or that a required plugin/component did not activate?",
+    "criteria": {
+      "true": "Startup stopped, a required component failed, or the run cannot continue",
+      "false": "Only a warning, an informational line, or something that still runs"
+    }
+  },
+  "category": {
+    "type": "choice",
+    "instructions": "The main cause category of this log text",
+    "criteria": {
+      "peer-version-conflict": "A package version does not satisfy the runtime or peer dependency ranges",
+      "missing-credential": "A required API key, token or environment variable is absent or invalid",
+      "filesystem-permission": "Access denied, locked file, sandbox or ACL problem",
+      "network-registry": "Cannot reach a registry, API endpoint or remote host",
+      "runtime-crash": "An unhandled error, exception or native crash in the runtime itself",
+      "config-syntax": "Invalid configuration, malformed YAML/JSON or a bad patch entry",
+      "other": "None of the above is a good description"
+    }
+  },
+  "severity": {
+    "type": "score",
+    "instructions": "How severe is this for the user's ability to keep working",
+    "criteria": [
+      "Informational noise, nothing to do",
+      "Degraded but usable, workaround exists",
+      "Blocking: the harness or a required tool cannot start",
+      "Data loss, security exposure, or silent wrong results"
+    ]
+  },
+  "evidence_sufficient": {
+    "type": "noul",
+    "instructions": "Does `log_text` alone contain enough detail to name one concrete cause and one concrete next command? Answer no when the text is vague, truncated, or the cause is genuinely ambiguous.",
+    "criteria": {
+      "true": "A specific cause and a specific next command can be named from the text",
+      "false": "The text is too vague/truncated to name the cause, or several unrelated causes remain equally likely"
+    }
+  }
+}

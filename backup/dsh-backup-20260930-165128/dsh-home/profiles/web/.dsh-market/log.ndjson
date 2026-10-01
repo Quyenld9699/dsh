@@ -1,0 +1,18 @@
+{"at":"2026-09-30T09:19:25.347Z","level":"info","event":"region","detail":"no region on record; network check chose global"}
+{"at":"2026-09-30T09:20:08.949Z","level":"info","event":"install","detail":"DSH-better-sidebar: pinned to the registry's latest, 0.24.1, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-09-30T09:20:13.650Z","level":"info","event":"install","detail":"dsh-better-sidebar@0.24.1 exit=0 hot=false"}
+{"at":"2026-09-30T09:20:21.403Z","level":"info","event":"update","detail":"dshmarket -> dshmarket@1.66.6 exit=0"}
+{"at":"2026-09-30T09:21:39.190Z","level":"info","event":"install","detail":"dsh-web#packages/dsh-skill-explorer: pinned to the registry's latest, 0.4.4, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-09-30T09:21:45.515Z","level":"info","event":"hot-mount","detail":"@linxin666/dsh-client-ui-skill-explorer: live"}
+{"at":"2026-09-30T09:21:45.583Z","level":"info","event":"install","detail":"@linxin666/dsh-client-ui-skill-explorer@0.4.4 exit=0 hot=true"}
+{"at":"2026-09-30T09:32:30.931Z","level":"info","event":"update","detail":"dsh-cost-meter -> dsh-cost-meter@1.7.47 exit=0"}
+{"at":"2026-09-30T09:33:39.140Z","level":"info","event":"install","detail":"dsh-bloom-theme: pinned to the registry's latest, 0.16.0, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-09-30T09:33:46.005Z","level":"info","event":"toggle","detail":"dsh-bloom-theme: no loader entry matched"}
+{"at":"2026-09-30T09:33:46.020Z","level":"info","event":"hot-mount","detail":"dsh-bloom-theme: live"}
+{"at":"2026-09-30T09:33:46.080Z","level":"info","event":"install","detail":"dsh-bloom-theme@0.16.0 exit=0 hot=true"}
+{"at":"2026-09-30T09:42:33.356Z","level":"info","event":"install","detail":"archify#integrations/deepseek-harness: pinned to the registry's latest, 0.1.0, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-09-30T09:42:40.435Z","level":"warn","event":"install-shadow","detail":"@tt-a1i/archify-dsh: introduced cross-layer duplicate loader names — @deepseek-ai/dsh-skill-filesystem (@deepseek-ai/dsh-base + @tt-a1i/archify-dsh)"}
+{"at":"2026-09-30T09:42:40.436Z","level":"info","event":"install","detail":"@tt-a1i/archify-dsh@0.1.0 exit=0 hot=false"}
+{"at":"2026-09-30T09:45:03.816Z","level":"info","event":"install","detail":"dsh-genui: pinned to the registry's latest, 0.11.3, so pnpm's fresh-release hold cannot substitute an older version silently"}
+{"at":"2026-09-30T09:45:12.879Z","level":"info","event":"hot-mount","detail":"@changfenhuang/dsh-genui: live"}
+{"at":"2026-09-30T09:45:13.021Z","level":"info","event":"install","detail":"@changfenhuang/dsh-genui@0.11.3 exit=0 hot=true"}

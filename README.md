@@ -1,20 +1,25 @@
-# DSH Custom Vault — kho plugin / theme / skill tự dựng cho DeepSeek Harness
+# DSH Custom Vault — kho skill / theme cho DeepSeek Harness
 
 > Repo trung tâm: đổi máy / cài lại DSH từ đầu → pull repo này về, chạy 1 lệnh kích hoạt, làm vài bước thủ công nhỏ là xong.
 
 ```
 D:\dsh\
-├── plugins\            # Plugin tự dựng (dạng source)
-│   └── dsh-skill-manager\
-│       ├── dynamic\    #   UI "Skill Manager" (plugin động, dựng lại trong session)
-│       └── static\     #   Host tĩnh: tự kích hoạt skill ⚡ mỗi khi boot harness
+├── plugins\            # Không còn plugin tự dựng (Jev dùng plugin market `dsh-jev-verify`) — xem plugins\README.md
 ├── themes\             # Theme tự dựng (trống, chờ bổ sung)
-├── skills\             # Skill GLOBAL (dùng mọi workspace) — CHỈ thêm khi bạn chỉ định
+├── skills\             # Backup skill GLOBAL = MANIFEST (skills\manifest.json: tên+nguồn+cách cài),
+│                       #   KHÔNG chứa bản sao skill; restore = nhờ agent cài lại theo manifest
 │                       #   (skill chỉ dùng 1 workspace KHÔNG nằm ở đây, giữ ở <workspace>\.agents\skills)
 ├── scripts\
 │   └── activate.ps1    # ★ SCRIPT KÍCH HOẠT — chạy trên máy mới
 └── README.md           # Bạn đang đọc file này (playbook)
 ```
+
+**Quản lý skill giờ dùng Skill Center có sẵn của DSH** (`@linxin666/dsh-client-ui-skill-explorer`,
+khai báo trong `%DSH_HOME%\profiles\web\package.json` → `dsh.profile.bundles`) — không cần plugin tự dựng nữa.
+Plugin `dsh-skill-manager` trước đây **đã được gỡ bỏ** (source + bản cài trong profile + loader row).
+
+**Jev (TypeSafe AI System One)** dùng plugin market **`dsh-jev-verify`** (cài bằng
+`dsh plugin --profile web add dsh-jev-verify`, hoặc GUI Plugin Market) — bản tự chế `dsh-jev` đã gỡ.
 
 ---
 
@@ -35,30 +40,44 @@ git clone <REPO_URL> D:\dsh
 powershell -ExecutionPolicy Bypass -File D:\dsh\scripts\activate.ps1
 ```
 Script tự làm:
-1. Copy `plugins\dsh-skill-manager\static` → `<DSH_HOME>\profiles\web\node_modules\dsh-skill-manager`.
-2. Thêm loader row `skillmgr-static` vào `<DSH_HOME>\profiles\web\cordis.patch.yml` (chỉ thêm nếu chưa có).
-3. Copy mọi thư mục con trong `skills\` (skill global đã chọn) → `~\.agents\skills\`.
-4. In danh sách việc cần làm tay còn lại.
+1. Kiểm tra profile web + Skill Center (`dsh-client-ui-skill-explorer`) đã có trong profile chưa.
+2. Cài plugin `dsh-jev` (tool `jev_evaluate`) vào `node_modules` + thêm loader row `jev` vào `cordis.patch.yml`.
+3. In hướng dẫn restore skill global từ `skills\manifest.json`.
 
-### Bước 3 — Làm tay (script in ra)
-1. **Khởi động lại harness** → plugin host tĩnh chạy: các skill đang đánh dấu ⚡ tự kích hoạt (đọc
-   `<workspace>\.agents\skill-autoload.json`; file này theo từng máy — sau khi restore cần đánh dấu lại qua UI hoặc nhờ agent).
-2. **UI "Skill Manager"** (trang Settings) là plugin động theo session → mở 1 hội thoại và nhắn:
-   > "Dựng lại plugin Skill Manager từ D:\dsh\plugins\dsh-skill-manager\dynamic (đọc README, cordis_define + run)."
-3. Kiểm tra danh mục skill ở hội thoại mới (các skill global + skill của từng workspace
-   — workspace skills nằm trong `<workspace>\.agents\skills`, không nằm trong repo này).
+### Bước 3 — Làm tay
+1. **Khởi động DSH web** (nếu chưa).
+2. **Restore skill global**: mở 1 hội thoại và nhắn agent:
+   > "Đọc `D:\dsh\skills\manifest.json` và cài lại các skill global theo hướng dẫn install của từng source."
+3. **Kiểm tra** danh mục skill bằng **Skill Center** (Settings) — gồm skill global + skill của từng workspace
+   (workspace skills nằm trong `<workspace>\.agents\skills`, không nằm trong repo này).
 
 ---
 
+## 🧠 Jev (TypeSafe AI System One) — phán đoán có kiểu cho agent
+
+- **Tool gốc `jev_evaluate`** (plugin `plugins\dsh-jev`): gửi `state` + `questions` (`choice` / `score` / `noul`)
+  → nhận answers có kiểu kèm xác suất/confidence. Profile có `patchReload: live` → nạp ngay, không cần restart.
+- **CLI**: `node D:\dsh\tools\jev\jev.mjs --check` (kiểm tra key + độ trễ), `--request-file <json>` (chạy 1 request),
+  ví dụ mẫu: `tools\jev\example-request.json`.
+- **Skill**: `~/.agents/skills/jev/SKILL.md` (nguồn trong repo: `tools\jev\SKILL.md`) + skill chính thức `typesafe-ai`.
+- **Key**: env `TYPESAFE_API_KEY`, hoặc `<DSH_HOME>\credentials\typesafe.key`, hoặc `refs.TYPESAFE_API_KEY`
+  trong `<DSH_HOME>\.credentials.yaml`. **Không commit key vào repo.**
+- Cách dùng đúng: 1 câu hỏi = 1 phán đoán hẹp; gộp nhiều câu vào **1 request** (chạy song song trên cùng state);
+  ngưỡng/trọng số đặt trong **code**, Jev chỉ trả phán đoán. Chi phí ~$0.042/1M input token, output miễn phí.
+
 ## Ghi chú vận hành
 
-- **Plugin động**: chết khi restart harness; dữ liệu trên đĩa thì bền. Để policy approval = **ask** lúc dựng lại (lần chạy đầu cần duyệt trên UI).
-- **Plugin tĩnh**: tự chạy mỗi boot, không cần duyệt; rollback = xoá thư mục `node_modules\dsh-skill-manager` + dòng `insert: skillmgr-static` trong `cordis.patch.yml`, restart.
-- **Hộp cát**: plugin chỉ ghi được trong workspace hiện tại; thao tác ghi `~\.agents` (user toàn máy) nên **nhờ agent** (file policy danger-full-access) hoặc chạy script với quyền phù hợp.
-- **Market/theme**: themes/ để trống chờ bổ sung; nếu sau này có theme tự dựng thì đặt ở `themes/<tên>` kèm hướng dẫn.
-- **Phân biệt phạm vi skill**: `skills\` = global (mọi workspace); `<workspace>\.agents\skills\` = chỉ workspace đó.
-  Chỉ bỏ vào `skills\` khi bạn chủ động yêu cầu "lưu global".
+- **Skill Center** là plugin market có sẵn trong profile, **không thuộc vault này**; nâng cấp/gỡ bằng
+  `dshmarket` hoặc sửa `%DSH_HOME%\profiles\web\package.json` rồi restart harness.
+- **Hộp cát plugin web**: tiến trình plugin trong profile chỉ ghi được file ở **root workspace**
+  (vd `D:\dsh\<file>`), **không** ghi được vào thư mục con (`.agents`, `skills`) hay `~\.agents`.
+  Thao tác cần ghi ra ngoài vùng đó → **nhờ agent** (agent có quyền full theo file policy).
+- **Market/theme**: `themes\` để trống chờ bổ sung; theme tự dựng đặt ở `themes\<tên>` kèm hướng dẫn.
+- **Phân biệt phạm vi skill**: `skills\manifest.json` = backup danh sách skill GLOBAL;
+  `<workspace>\.agents\skills\` = skill chỉ dùng workspace đó.
+  Chỉ thêm vào `skills\manifest.json` khi bạn chủ động yêu cầu "lưu skill global".
 - Nếu bạn để skill nhạy cảm (số liệu nội bộ…) trong repo này → **đặt repo GitHub ở chế độ Private**.
 
 ## Thêm thứ mới vào kho
-Mỗi plugin/skill/theme: đặt vào đúng thư mục con kèm `README` nhỏ mô tả chức năng + cách kích hoạt, rồi commit.
+Mỗi plugin/theme: đặt vào đúng thư mục con kèm `README` nhỏ mô tả chức năng + cách kích hoạt.
+Skill global: chỉ cập nhật `skills\manifest.json` (không copy nội dung skill vào repo).
